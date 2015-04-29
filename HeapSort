@@ -1,0 +1,78 @@
+package com.test;
+
+public class HeapSort {
+  //
+  // private static int[] sort = new int[] {1, 0, 10, 20, 3, 5, 6, 4, 9, 8, 12, 17, 34, 11};
+  private static int[] sort = new int[] {1, 0, 10, 20, 3, 5, 6, 4, 9, 8, 12, 17, 34, 11, 33, 43, 54, 75, 87, 987, 44};
+
+  public static void main(String[] args) {
+    doHeapSort(sort);
+  }
+
+  private static void buildMaxHeap(int[] array, int len) {
+    if (len <= 1) {
+      return;
+    } else if (len == 2) {
+      swap(0, 1);
+      return;
+    }
+
+    int left, right = -1, largest;
+    for (int i = getParent(len - 1); i >= 0; i--) {
+      largest = i;
+      left = getLeftChild(i);
+      if (left < 0) {
+        break;
+      }
+      boolean hasRight = false;
+      right = getRightChild(i);
+      if (right <= len - 1) {
+        hasRight = true;
+      }
+      if (array[left] > array[i])
+        largest = left;
+      if (hasRight && array[right] > array[largest])
+        largest = right;
+      swap(largest, i);
+    }
+  }
+
+  private static void doHeapSort(int[] array) {
+    if (array.length < 3) {
+      swap(0, 1);
+      return;
+    }
+    for (int i = array.length; i > 0; i--) {
+      buildMaxHeap(array, i);
+      swap(0, i - 1);
+      print(array);
+    }
+  }
+
+  private static void print(int[] array) {
+    // System.out.println(Calendar.getInstance().getTime().toLocaleString());
+    for (int i = 0; i < array.length; i++) {
+      System.out.print(array[i] + ",");
+    }
+    System.out.println("");
+    // System.out.println("array.length="+array.length);
+  }
+
+  private static int getParent(int current) {
+    return (current - 1) / 2;
+  }
+
+  private static int getLeftChild(int i) {
+    return i * 2 + 1;
+  }
+
+  private static int getRightChild(int i) {
+    return i * 2 + 2;
+  }
+
+  private static void swap(int b, int e) {
+    int tmp = sort[b];
+    sort[b] = sort[e];
+    sort[e] = tmp;
+  }
+}
