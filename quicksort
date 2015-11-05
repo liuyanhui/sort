@@ -1,0 +1,60 @@
+public class QuickSort {
+
+  private static int[] array =
+      {-2,-333,3, 5, 6, 7, 8, 4, 45, 98, 344, 2456, 755, 33, 21, 55, 778, 3432, 1, 8989};
+
+  public static void main(String[] args) {
+    System.out.println("before:array.length=" + array.length);
+    quicksort(array, 0, array.length - 1);
+    printFun(array);
+  }
+
+  public static void quicksort(int[] input, int left, int right) {
+    System.out.println("left="+left+";right="+right);
+    // 参数校验
+    if (left >= right)
+      return;
+    // 一次quicksort
+    int cur = input[left];
+    int l = left, r = right;
+    while (l < r) {
+      while (cur < input[r] && r >= l) {
+        r--;
+      }
+      if (cur > input[r]) {
+        input[l] = input[r];
+        input[r] = cur;
+        l++;
+      }
+      System.out.println(">>>>>>>>>>>>>");
+      printFun(array);
+      while (cur > input[l] && l < r) {
+        l++;
+      }
+      if (cur < input[l]) {
+        input[r] = input[l];
+        input[l] = cur;
+        r--;
+      }
+      System.out.println("<<<<<<<<<<<<<<<<");
+      printFun(array);
+    }
+    input[l] = cur;
+    System.out.println(" ");
+    System.out.println("cur=" + cur + ";l=" + l);
+    System.out.println("******************");
+    printFun(array);
+    // quicksort left
+    quicksort(input, 0, l - 1);
+    // quicksort right
+    quicksort(input, l + 1, right);
+  }
+
+  private static void printFun(int[] printArray) {
+    System.out.println("printFun:array.length=" + array.length);
+    for (int i = 0; i < array.length; i++) {
+      System.out.print(array[i] + ",");
+    }
+    System.out.println(" ");
+  }
+}
